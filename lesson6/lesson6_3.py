@@ -1,9 +1,18 @@
 from pprint import pprint #為了看dict好看一點
+import openpyxl
+from openpyxl import Workbook, worksheet
 import tools
 
 def main():
     sitenames:list[str] = tools.get_sitenames('aqi.xlsx')
-    print(sitenames)
+    wb = openpyxl.Workbook()
+    sheet:worksheet = wb.active
+    sheet.title = "站點名稱"
+    for idy,name in enumerate(sitenames):
+        print(name)
+        sheet.cell(column=1, row=idy+1,value=name)
+    wb.save('老闆要的資訊.xlsx')
+
    
 if __name__ == '__main__':
     main()
