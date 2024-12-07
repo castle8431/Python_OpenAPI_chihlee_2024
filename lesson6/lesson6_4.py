@@ -17,3 +17,13 @@ with st.sidebar:
     )
 
     st.title(f"{add_selectbox}")
+
+allData:list[dict] = tools.get_aqi(excel_name='aqu.xlsx')
+
+#seleted_item:list[dict] = []
+#for item in allData:
+#    if item['sitename'] == add_selectbox:
+#        seleted_item.append(item)
+
+selected_item:list[dict] = [item for item in allData if item['sitename']==add_selectbox]
+st.table(data=selected_item)
