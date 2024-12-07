@@ -1,3 +1,5 @@
 streamlit
+openpyxl
 
-#pip install -r requirements.txt (外部套件放這個txt, 執行指令就會全部灌進來)
+#pip install -r requirements.txt 
+#(外部套件放這個txt, 執行這個指令就會全部灌進來)
