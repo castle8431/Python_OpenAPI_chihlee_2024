@@ -1,5 +1,6 @@
 from tools import fetch_youbike_data
 import streamlit as st
+import pandas as pd
 
 youbike_data:list[dict] = fetch_youbike_data()
 
@@ -14,9 +15,38 @@ with col1:
     selected_area = st.selectbox("行政區域",area_list)
     
 with col2:
-    st.write(selected_area)
-#     filter_data = filter(lambda item:item['sarea'] == selected_sarea,youbike_data)
-#     st.dataframe(filter_data)
+    def filter_func(value:dict)->bool:
+        return value['sarea'] == selected_area
+    
+    filter_list:list[dict] = list(filter(filter_func,youbike_data))
+    show_data:list[dict] = [{'站點':item['sna'],
+                             '總車輛數':item['tot'],
+                             '可借車輛數':item['sbi'],
+                             '可還車輛數':item['bemp'],
+                             '營業狀態':item['act'],
+                             'latitude':float(item['lat']),
+                             'longitude':float(item['lng']),
+                             }for item in filter_list]
+    st.dataframe(show_data)
+
+df = pd.DataFrame(show_data)
+
+# 下方顯示該行政區域的YouBike站點資訊的地圖
+
+st.map(
+    data=df,
+    latitude='latitude',
+    longitude='longitude',
+    color='#FF0000',  # 紅色標記
+    size=15,          # 標記大小
+)
+
+# 在地圖下方顯示站點詳細資訊
+for _, row in df.iterrows():
+    st.text(row['站點'])
+
+
+
 
 # #顯示地圖
 # filter_data = list(filter(lambda item:item['sarea'] == selected_sarea,youbike_data))
