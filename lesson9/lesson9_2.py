@@ -29,7 +29,7 @@ def convert_to_tflite(model, output_path='model.tflite'):
     print(f"TFLite model saved to {output_path}")
 
    
-if __name__ == "__main__"
+if __name__ == "__main__":
     # Original model training
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(units=1, input_shape=[1])
